@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Práctica para la Gestión de Proyectos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0a192f;
+            --teal: #64ffda;
+            --light-navy: #112240;
+            --lightest-navy: #233554;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --lightest-slate: #ccd6f6;
+            --white: #e6f1ff;
+            --green-accent: #2ecc71;
+            --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--slate);
+            background-color: var(--navy);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        /* Portada */
+        #portada {
+            height: 100vh;
+            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.9)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .portada-content {
+            max-width: 800px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        #portada h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        #portada h2 {
+            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
+            color: var(--teal);
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--teal);
+            color: var(--navy);
+            padding: 14px 32px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            margin-top: 1rem;
+            border: 2px solid var(--teal);
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--teal);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(100, 255, 218, 0.2);
+        }
+
+        /* Menú de navegación */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(10, 25, 47, 0.95);
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--teal);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light-slate);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--teal);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--teal);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Secciones */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--teal);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+            font-size: 1.1rem;
+            color: var(--light-slate);
+        }
+
+        /* Tarjetas de fases */
+        .phase-card {
+            background: var(--light-navy);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+            transition: var(--transition);
+            margin-bottom: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.7);
+        }
+
+        .card-content {
+            flex: 1;
+            padding: 2.5rem;
+            min-width: 300px;
+        }
+
+        .card-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--teal);
+        }
+
+        .card-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .card-visual {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: rgba(100, 255, 218, 0.05);
+        }
+
+        .smart-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .smart-list li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .smart-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--teal);
+            font-weight: bold;
+        }
+
+        /* Elementos visuales */
+        .diagram {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+        }
+
+        .feasibility-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feasibility-item {
+            flex: 1;
+            min-width: 200px;
+            background: var(--lightest-navy);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feasibility-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feasibility-item i {
+            font-size: 2.5rem;
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+
+        .feasibility-item h4 {
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .benefit-chart {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
+
+        .task-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .task-table th {
+            background-color: var(--lightest-navy);
+            color: var(--teal);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .task-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--lightest-navy);
+        }
+
+        .task-table tr:hover {
+            background-color: rgba(100, 255, 218, 0.05);
+        }
+
+        .kpi-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .kpi-item {
+            flex: 1;
+            min-width: 200px;
+            background: var(--lightest-navy);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--teal);
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-label {
+            font-size: 1.1rem;
+            color: var(--light-slate);
+        }
+
+        /* Conclusiones */
+        #conclusiones {
+            text-align: center;
+            background: linear-gradient(to bottom, var(--navy), var(--light-navy));
+        }
+
+        .conclusion-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .conclusion-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .conclusion-img {
+            width: 100%;
+            max-width: 600px;
+            height: 350px;
+            margin: 2rem auto;
+            background: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--light-navy);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--light-slate);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--teal);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #portada h1 {
+                font-size: 2.5rem;
+            }
+            
+            #portada h2 {
+                font-size: 1.4rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+            }
+            
+            .nav-links li {
+                margin: 0 0.8rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .phase-card {
+                flex-direction: column;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Portada -->
+    <section id="portada">
+        <div class="portada-content">
+            <h1>Guía Práctica para la Gestión de Proyectos</h1>
+            <h2>De la planificación al control: fases y estrategias</h2>
+            <a href="#fases" class="btn">Explorar fases del proyecto</a>
+        </div>
+    </section>
+
+    <!-- Menú de navegación -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">GestiónProyectos</a>
+            <ul class="nav-links">
+                <li><a href="#portada">Inicio</a></li>
+                <li><a href="#fase1">Fase 1</a></li>
+                <li><a href="#fase2">Fase 2</a></li>
+                <li><a href="#fase3">Fase 3</a></li>
+                <li><a href="#fase5">Fase 5</a></li>
+                <li><a href="#conclusiones">Conclusiones</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Fase 1 -->
+    <section id="fase1" class="fade-in">
+        <div class="section-header">
+            <h2>Fase 1 - Planificación: Objetivos y Metas</h2>
+            <p>Estableciendo los cimientos para el éxito de tu proyecto</p>
+        </div>
+        
+        <div class="phase-card">
+            <div class="card-content">
+                <h3>Objetivos SMART</h3>
+                <p>En esta fase se establecen los objetivos SMART del proyecto, asegurando que sean claros, medibles y alcanzables dentro de un tiempo definido.</p>
+                
+                <ul class="smart-list">
+                    <li><strong>Específico (Specific):</strong> El objetivo debe ser claro y específico para evitar ambigüedades.</li>
+                    <li><strong>Medible (Measurable):</strong> Debe incluir criterios para medir el progreso y el éxito.</li>
+                    <li><strong>Alcanzable (Achievable):</strong> El objetivo debe ser realista y posible de lograr.</li>
+                    <li><strong>Relevante (Relevant):</strong> Debe alinearse con los objetivos estratégicos de la organización.</li>
+                    <li><strong>Temporal (Time-bound):</strong> Debe tener un plazo definido para su consecución.</li>
+                </ul>
+            </div>
+            <div class="card-visual">
+                <div class="diagram">
+                    <svg viewBox="0 0 400 400">
+                        <circle cx="200" cy="200" r="150" fill="#0a192f" stroke="#64ffda" stroke-width="3"/>
+                        <text x="200" y="120" text-anchor="middle" fill="#64ffda" font-size="24" font-weight="bold">SMART</text>
+                        <text x="200" y="160" text-anchor="middle" fill="#ccd6f6" font-size="18">Específico</text>
+                        <text x="200" y="190" text-anchor="middle" fill="#ccd6f6" font-size="18">Medible</text>
+                        <text x="200" y="220" text-anchor="middle" fill="#ccd6f6" font-size="18">Alcanzable</text>
+                        <text x="200" y="250" text-anchor="middle" fill="#ccd6f6" font-size="18">Relevante</text>
+                        <text x="200" y="280" text-anchor="middle" fill="#ccd6f6" font-size="18">Temporal</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fase 2 -->
+    <section id="fase2" class="fade-in">
+        <div class="section-header">
+            <h2>Fase 2 - Planificación: Justificación</h2>
+            <p>Validando la necesidad y viabilidad de tu proyecto</p>
+        </div>
+        
+        <div class="phase-card">
+            <div class="card-content">
+                <h3>Fundamentos del Proyecto</h3>
+                <p>La justificación explica por qué es necesario el proyecto, los beneficios que generará y su viabilidad.</p>
+                
+                <div class="feasibility-container">
+                    <div class="feasibility-item">
+                        <i class="fas fa-cogs"></i>
+                        <h4>Viabilidad Técnica</h4>
+                        <p>¿Tenemos la tecnología y habilidades necesarias para completar el proyecto?</p>
+                    </div>
+                    <div class="feasibility-item">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Viabilidad Económica</h4>
+                        <p>¿Los beneficios superan los costos? ¿Tenemos los recursos financieros necesarios?</p>
+                    </div>
+                    <div class="feasibility-item">
+                        <i class="fas fa-users"></i>
+                        <h4>Viabilidad Operativa</h4>
+                        <p>¿Podemos implementar y mantener la solución una vez completado el proyecto?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-visual">
+                <div class="benefit-chart">
+                    <svg viewBox="0 0 400 300">
+                        <rect x="50" y="100" width="80" height="150" fill="#64ffda" opacity="0.8"/>
+                        <text x="90" y="270" text-anchor="middle" fill="#ccd6f6">Riesgos</text>
+                        
+                        <rect x="160" y="50" width="80" height="200" fill="#2ecc71" opacity="0.8"/>
+                        <text x="200" y="270" text-anchor="middle" fill="#ccd6f6">Beneficios</text>
+                        
+                        <rect x="270" y="80" width="80" height="170" fill="#0a192f" stroke="#64ffda" stroke-width="2"/>
+                        <text x="310" y="270" text-anchor="middle" fill="#ccd6f6">Costos</text>
+                        
+                        <line x1="30" y1="50" x2="370" y2="50" stroke="#8892b0" stroke-dasharray="4"/>
+                        <line x1="30" y1="100" x2="370" y2="100" stroke="#8892b0" stroke-dasharray="4"/>
+                        <line x1="30" y1="150" x2="370" y2="150" stroke="#8892b0" stroke-dasharray="4"/>
+                        <line x1="30" y1="200" x2="370" y2="200" stroke="#8892b0" stroke-dasharray="4"/>
+                        
+                        <text x="20" y="55" text-anchor="start" fill="#ccd6f6" font-size="12">Alto</text>
+                        <text x="20" y="205" text-anchor="start" fill="#ccd6f6" font-size="12">Bajo</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fase 3 -->
+    <section id="fase3" class="fade-in">
+        <div class="section-header">
+            <h2>Fase 3 - Organización: Actividades y Recursos</h2>
+            <p>Estructurando tu equipo y recursos para el éxito</p>
+        </div>
+        
+        <div class="phase-card">
+            <div class="card-content">
+                <h3>Asignación de Tareas</h3>
+                <p>Aquí se asignan roles, tareas y recursos necesarios para cumplir con los objetivos.</p>
+                
+                <table class="task-table">
+                    <tr>
+                        <th>Tarea</th>
+                        <th>Responsable</th>
+                        <th>Tiempo estimado</th>
+                    </tr>
+                    <tr>
+                        <td>Investigación de mercado</td>
+                        <td>Ana Martínez</td>
+                        <td>2 semanas</td>
+                    </tr>
+                    <tr>
+                        <td>Diseño de prototipo</td>
+                        <td>Carlos Rodríguez</td>
+                        <td>3 semanas</td>
+                    </tr>
+                    <tr>
+                        <td>Desarrollo de software</td>
+                        <td>Equipo de desarrollo</td>
+                        <td>6 semanas</td>
+                    </tr>
+                    <tr>
+                        <td>Pruebas de calidad</td>
+                        <td>Laura Fernández</td>
+                        <td>2 semanas</td>
+                    </tr>
+                    <tr>
+                        <td>Implementación</td>
+                        <td>Equipo de operaciones</td>
+                        <td>1 semana</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-visual">
+                <div class="diagram">
+                    <svg viewBox="0 0 400 300">
+                        <!-- Diagrama de Gantt simplificado -->
+                        <rect x="50" y="50" width="300" height="30" fill="#0a192f" stroke="#64ffda" stroke-width="2"/>
+                        <rect x="50" y="100" width="250" height="30" fill="#0a192f" stroke="#64ffda" stroke-width="2"/>
+                        <rect x="50" y="150" width="200" height="30" fill="#0a192f" stroke="#64ffda" stroke-width="2"/>
+                        <rect x="50" y="200" width="150" height="30" fill="#0a192f" stroke="#64ffda" stroke-width="2"/>
+                        <rect x="50" y="250" width="100" height="30" fill="#0a192f" stroke="#64ffda" stroke-width="2"/>
+                        
+                        <rect x="50" y="50" width="150" height="30" fill="#64ffda" opacity="0.6"/>
+                        <rect x="50" y="100" width="100" height="30" fill="#64ffda" opacity="0.6"/>
+                        <rect x="50" y="150" width="75" height="30" fill="#64ffda" opacity="0.6"/>
+                        <rect x="50" y="200" width="40" height="30" fill="#64ffda" opacity="0.6"/>
+                        <rect x="50" y="250" width="30" height="30" fill="#64ffda" opacity="0.6"/>
+                        
+                        <text x="20" y="67" fill="#ccd6f6" font-size="12">Planificación</text>
+                        <text x="20" y="117" fill="#ccd6f6" font-size="12">Diseño</text>
+                        <text x="20" y="167" fill="#ccd6f6" font-size="12">Desarrollo</text>
+                        <text x="20" y="217" fill="#ccd6f6" font-size="12">Pruebas</text>
+                        <text x="20" y="267" fill="#ccd6f6" font-size="12">Lanzamiento</text>
+                        
+                        <line x1="50" y1="40" x2="50" y2="280" stroke="#8892b0" stroke-dasharray="4"/>
+                        <line x1="350" y1="40" x2="350" y2="280" stroke="#8892b0" stroke-dasharray="4"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fase 5 -->
+    <section id="fase5" class="fade-in">
+        <div class="section-header">
+            <h2>Fase 5 - Control</h2>
+            <p>Monitoreando el progreso y asegurando los resultados</p>
+        </div>
+        
+        <div class="phase-card">
+            <div class="card-content">
+                <h3>Seguimiento del Proyecto</h3>
+                <p>El control permite dar seguimiento al avance del proyecto, identificar desviaciones y aplicar acciones correctivas.</p>
+                
+                <div class="kpi-container">
+                    <div class="kpi-item">
+                        <div class="kpi-value">85%</div>
+                        <div class="kpi-label">Avance del Proyecto</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value">92%</div>
+                        <div class="kpi-label">Calidad</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value">78%</div>
+                        <div class="kpi-label">Presupuesto</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-visual">
+                <div class="diagram">
+                    <svg viewBox="0 0 400 300">
+                        <!-- Indicadores de progreso -->
+                        <circle cx="200" cy="150" r="80" fill="none" stroke="#0a192f" stroke-width="15"/>
+                        <circle cx="200" cy="150" r="80" fill="none" stroke="#64ffda" stroke-width="15" 
+                                stroke-dasharray="502" stroke-dashoffset="75" stroke-linecap="round"/>
+                        <text x="200" y="150" text-anchor="middle" fill="#ccd6f6" font-size="36" font-weight="bold">85%</text>
+                        <text x="200" y="190" text-anchor="middle" fill="#64ffda" font-size="18">Completado</text>
+                        
+                        <rect x="100" y="230" width="20" height="20" fill="#64ffda"/>
+                        <text x="130" y="245" text-anchor="start" fill="#ccd6f6" font-size="14">Planificado</text>
+                        
+                        <rect x="100" y="260" width="20" height="20" fill="#0a192f" stroke="#64ffda" stroke-width="2"/>
+                        <text x="130" y="275" text-anchor="start" fill="#ccd6f6" font-size="14">Real</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusiones -->
+    <section id="conclusiones" class="fade-in">
+        <div class="section-header">
+            <h2>Conclusiones</h2>
+            <p>Reflexiones finales sobre la gestión efectiva de proyectos</p>
+        </div>
+        
+        <div class="conclusion-content">
+            <p>"Cada fase es esencial para garantizar el éxito del proyecto. La planificación adecuada establece el rumbo, la organización eficiente asigna los recursos necesarios, y el control constante asegura que nos mantengamos en el camino correcto."</p>
+            
+            <p>"La planificación adecuada y el control oportuno son herramientas claves en la gestión. Juntas forman un ciclo virtuoso que permite a los equipos anticipar desafíos, adaptarse a cambios y entregar resultados que superan las expectativas."</p>
+            
+            <div class="conclusion-img"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="fade-in">
+        <div class="footer-content">
+            <p>Guía Práctica para la Gestión de Proyectos</p>
+            <p>© 2023 Todos los derechos reservados</p>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Efecto de scroll para el menú
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.2)';
+                nav.style.backgroundColor = 'rgba(10, 25, 47, 0.98)';
+            } else {
+                nav.style.boxShadow = 'none';
+                nav.style.backgroundColor = 'rgba(10, 25, 47, 0.95)';
+            }
+        });
+
+        // Animación al hacer scroll
+        const faders = document.querySelectorAll('.fade-in');
+        
+        const appearOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -100px 0px"
+        };
+        
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('appear');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+        
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+
+        // Navegación suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
